@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+  /* ── Form fields ── */
+  .field-wrapper {
+    @apply flex flex-col gap-0.5 text-xs;
+  }
+
+  .field-label {
+    @apply text-gray-500 text-[10px] font-semibold uppercase tracking-wide;
+  }
+
+  .field-input,
+  .field-select,
+  .field-textarea {
+    @apply w-full box-border bg-gray-50 border border-gray-300 rounded
+           px-1.5 py-[3px] text-xs font-sans outline-none;
+  }
+
+  .field-textarea {
+    @apply resize-y;
+  }
+
+  .field-toggle {
+    @apply flex items-center gap-2 text-xs text-gray-700 cursor-pointer;
+  }
+
+  .field-toggle input[type='checkbox'] {
+    @apply h-3.5 w-3.5 accent-indigo-600;
+  }
+
+  /* ── Handles ── */
+  .handle-label {
+    @apply absolute text-[9px] text-gray-500 whitespace-nowrap
+           -translate-y-1/2 pointer-events-none select-none;
+  }
+
+  /* ── Toolbar ── */
+  .toolbar-node {
+    @apply cursor-grab min-w-[80px] h-[60px] rounded-lg bg-[#1C2536]
+           text-white flex flex-col items-center justify-center;
+  }
+
+  /* ── Submit button ── */
+  .submit-btn {
+    @apply px-4 py-2 rounded-md bg-indigo-600 text-white font-medium
+           hover:bg-indigo-700 transition-colors;
+  }
