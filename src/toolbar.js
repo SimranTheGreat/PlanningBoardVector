@@ -3,24 +3,36 @@
 import { DraggableNode } from './draggableNode';
 
 const NODES = [
-  // original
-  { type: 'customInput',  label: 'Input'     },
-  { type: 'llm',          label: 'LLM'       },
-  { type: 'customOutput', label: 'Output'    },
-  { type: 'text',         label: 'Text'      },
-  // new
-  { type: 'filter',       label: 'Filter'    },
-  { type: 'timer',        label: 'Timer'     },
-  { type: 'merge',        label: 'Merge'     },
-  { type: 'transform',    label: 'Transform' },
-  { type: 'note',         label: 'Note'      },
+  { type: 'customInput', label: 'Input', icon: '→' },
+  { type: 'llm', label: 'LLM', icon: '✦' },
+  { type: 'customOutput', label: 'Output', icon: '←' },
+  { type: 'text', label: 'Text', icon: 'T' },
+  { type: 'filter', label: 'Filter', icon: '⛃' },
+  { type: 'timer', label: 'Timer', icon: '⏱' },
+  { type: 'merge', label: 'Merge', icon: '⇄' },
+  { type: 'transform', label: 'Transform', icon: '⚡' },
+  { type: 'note', label: 'Note', icon: '📝' },
 ];
 
 export const PipelineToolbar = () => (
-  <div className="p-2.5">
-    <div className="mt-5 flex flex-wrap gap-2.5">
-      {NODES.map(({ type, label }) => (
-        <DraggableNode key={type} type={type} label={label} />
+  <div className="px-6 py-4">
+    <div
+      className="
+        flex flex-wrap gap-3
+        rounded-2xl
+        bg-white
+        border border-slate-200
+        shadow-sm
+        p-4
+      "
+    >
+      {NODES.map(({ type, label, icon }) => (
+        <div key={type} className="group">
+          <DraggableNode
+            type={type}
+            label={`${icon} ${label}`}
+          />
+        </div>
       ))}
     </div>
   </div>

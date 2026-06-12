@@ -1,14 +1,24 @@
-
 import { Handle, Position } from 'reactflow';
 
-const NODE_WIDTH = 220;
+const NODE_WIDTH = 280;
 
 const HandleLabel = ({ label, side }) => (
-  <span className={`handle-label ${side === 'left' ? 'left-3.5' : 'right-3.5'}`}>
+  <span
+    className={`
+      absolute
+      top-1/2
+      -translate-y-1/2
+      text-[10px]
+      text-slate-500
+      whitespace-nowrap
+      pointer-events-none
+      select-none
+      ${side === 'left' ? '-left-16' : '-right-16'}
+    `}
+  >
     {label}
   </span>
 );
-
 
 export const NodeTextField = ({ label, value, onChange, placeholder }) => (
   <label className="field-wrapper">
@@ -23,8 +33,13 @@ export const NodeTextField = ({ label, value, onChange, placeholder }) => (
   </label>
 );
 
-
-export const NodeTextArea = ({ label, value, onChange, placeholder, rows = 3 }) => (
+export const NodeTextArea = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  rows = 3,
+}) => (
   <label className="field-wrapper">
     <span className="field-label">{label}</span>
     <textarea
@@ -37,20 +52,36 @@ export const NodeTextArea = ({ label, value, onChange, placeholder, rows = 3 }) 
   </label>
 );
 
-
-export const NodeSelect = ({ label, value, onChange, options }) => (
+export const NodeSelect = ({
+  label,
+  value,
+  onChange,
+  options,
+}) => (
   <label className="field-wrapper">
     <span className="field-label">{label}</span>
-    <select value={value} onChange={onChange} className="field-select">
+    <select
+      value={value}
+      onChange={onChange}
+      className="field-select"
+    >
       {options.map(({ value: v, label: l }) => (
-        <option key={v} value={v}>{l}</option>
+        <option key={v} value={v}>
+          {l}
+        </option>
       ))}
     </select>
   </label>
 );
 
-
-export const NodeNumberField = ({ label, value, onChange, min, max, step }) => (
+export const NodeNumberField = ({
+  label,
+  value,
+  onChange,
+  min,
+  max,
+  step,
+}) => (
   <label className="field-wrapper">
     <span className="field-label">{label}</span>
     <input
@@ -65,23 +96,34 @@ export const NodeNumberField = ({ label, value, onChange, min, max, step }) => (
   </label>
 );
 
-
-export const NodeToggle = ({ label, checked, onChange }) => (
+export const NodeToggle = ({
+  label,
+  checked,
+  onChange,
+}) => (
   <label className="field-toggle">
-    <input type="checkbox" checked={checked} onChange={onChange} />
+    <input
+      type="checkbox"
+      checked={checked}
+      onChange={onChange}
+    />
     <span>{label}</span>
   </label>
 );
 
-
 const handleTop = (index, total, override) => {
-  if (override !== undefined) return `${override * 100}%`;
-  // space handles evenly between 20% and 80% of the node height
-  if (total === 1) return '50%';
+  if (override !== undefined) {
+    return `${override * 100}%`;
+  }
+
+  if (total === 1) {
+    return '50%';
+  }
+
   const step = 60 / (total - 1);
+
   return `${20 + step * index}%`;
 };
-
 
 export const BaseNode = ({
   id,
@@ -94,49 +136,98 @@ export const BaseNode = ({
   children,
 }) => {
   return (
-    <div className="pipeline-node hover:shadow-node-hover" style={{ width: NODE_WIDTH }}>
-      {/* ── header ── */}
-      <div className="node-header" style={{ background: color }}>
-        {icon && <span className="text-sm leading-none">{icon}</span>}
+    <div
+      className="pipeline-node hover:shadow-node-hover"
+      style={{ width: NODE_WIDTH }}
+    >
+      {/* Header */}
+      <div
+        className="node-header"
+        style={{ background: color }}
+      >
+        {icon && (
+          <span className="text-sm leading-none">
+            {icon}
+          </span>
+        )}
         <span>{label}</span>
       </div>
 
-      {/* ── body ── */}
-      <div className="node-body" style={{ minHeight }}>
+      {/* Body */}
+      <div
+        className="node-body"
+        style={{ minHeight }}
+      >
         {children}
       </div>
 
       {inputs.map((h, i) => (
         <div
           key={h.id}
-          className="absolute left-0 flex items-center -translate-y-1/2"
-          style={{ top: handleTop(i, inputs.length, h.position) }}
+          className="absolute left-0 -translate-y-1/2"
+          style={{
+            top: handleTop(
+              i,
+              inputs.length,
+              h.position
+            ),
+          }}
         >
           <Handle
             type="target"
             position={Position.Left}
             id={`${id}-${h.id}`}
-            className="!w-2.5 !h-2.5 !border-2 !border-white"
-            style={{ background: color, left: -5 }}
+            className="
+              !w-2.5
+              !h-2.5
+              !border-2
+              !border-white
+            "
+            style={{
+              background: color,
+              left: -5,
+            }}
           />
-          <HandleLabel label={h.label} side="left" />
+
+          <HandleLabel
+            label={h.label}
+            side="left"
+          />
         </div>
       ))}
 
       {outputs.map((h, i) => (
         <div
           key={h.id}
-          className="absolute right-0 flex items-center -translate-y-1/2"
-          style={{ top: handleTop(i, outputs.length, h.position) }}
+          className="absolute right-0 -translate-y-1/2"
+          style={{
+            top: handleTop(
+              i,
+              outputs.length,
+              h.position
+            ),
+          }}
         >
           <Handle
             type="source"
             position={Position.Right}
             id={`${id}-${h.id}`}
-            className="!w-2.5 !h-2.5 !border-2 !border-white"
-            style={{ background: color, right: -5 }}
+            className="
+              !w-2.5
+              !h-2.5
+              !border-2
+              !border-white
+            "
+            style={{
+              background: color,
+              right: -5,
+            }}
           />
-          <HandleLabel label={h.label} side="right" />
+
+          <HandleLabel
+            label={h.label}
+            side="right"
+          />
         </div>
       ))}
     </div>
