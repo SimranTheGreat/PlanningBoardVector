@@ -1,6 +1,6 @@
 import { Handle, Position } from 'reactflow';
 
-const NODE_WIDTH = 280;
+const NODE_WIDTH = 180;
 
 const HandleLabel = ({ label, side }) => (
   <span
